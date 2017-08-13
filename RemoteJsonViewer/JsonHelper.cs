@@ -7,7 +7,7 @@ namespace JsonTreeView
     public class JsonHelper
     {
         private static readonly TcpClient TcpClient = new TcpClient();
-
+        private static StreamWriter clientStreamWriter;
         public static void Log(string json)
         {
             if (!TcpClient.Connected)
@@ -15,13 +15,15 @@ namespace JsonTreeView
                 var result = TcpClient.ConnectAsync("127.0.0.1", 9128);
                 result.Wait();
                 if (TcpClient.Connected)
-                    Console.WriteLine("jsonViewer: " + (TcpClient.Connected ? "connected" : "cant connect"));
-                else
+                {
+                    var networkStream = TcpClient.GetStream();
+                    clientStreamWriter = new StreamWriter(networkStream);
+                    Console.WriteLine("jsonViewer: " + (TcpClient.Connected ? "connected" : "cant connect"));      
+                }
+                 else
                     return;
             }
-
-            var networkStream = TcpClient.GetStream();
-            var clientStreamWriter = new StreamWriter(networkStream);
+  
             clientStreamWriter.Write(json + Environment.NewLine);
             clientStreamWriter.Flush();
         }
