@@ -1,3 +1,4 @@
+![alt text](https://raw.githubusercontent.com/n0ise9914/RemoteJsonViewer/master/screenshot/img.png)<br>
 As you know its hard to read json logs in ide's console, therefore i created this tiny usefull app.<br>
 Its listens on localhost:9128 and instantly parses incoming jsons.
 
